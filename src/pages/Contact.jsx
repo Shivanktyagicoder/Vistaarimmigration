@@ -9,7 +9,7 @@ import {
   AlertCircle, Clock, Shield, Award, Headphones,
 } from 'lucide-react'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API_URL = import.meta.env.VITE_API_URL || 'https://vistaarimmigration.onrender.com'
 
 // ── VALIDATION ───────────────────────────────────────────────────────────────
 const schema = z.object({
