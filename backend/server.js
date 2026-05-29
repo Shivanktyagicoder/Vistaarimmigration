@@ -1,30 +1,26 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
-const helmet = require('helmet')
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') })
+const express       = require('express')
+const cors          = require('cors')
+const helmet        = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
-const mongoose = require('mongoose')
+const mongoose      = require('mongoose')
+const contactRouter = require('./routes/contact')
 
-const app = express()
+const app  = express()
 const PORT = process.env.PORT || 5000
 
-// ── HEALTH CHECK FIRST (before all middleware) ────────────
-app.get('/health', (req, res) =>
-  res.json({ status: 'ok', timestamp: new Date().toISOString() })
-)
-
-// ── SECURITY HEADERS ──────────────────────────────────────
-app.use(helmet())
-
-// ── CORS ──────────────────────────────────────────────────
+// ── CORS first ────────────────────────────────────────────
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://localhost:3000',
   'https://vistaarimmigration.com',
   'https://www.vistaarimmigration.com',
+  'https://vistaarimmigration.onrender.com',
 ]
+
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin && process.env.NODE_ENV !== 'production') return callback(null, true)
+    if (!origin) return callback(null, true)
     if (allowedOrigins.includes(origin)) return callback(null, true)
     callback(new Error(`CORS blocked: ${origin}`))
   },
@@ -32,20 +28,36 @@ app.use(cors({
   credentials: true,
 }))
 
-// ── BODY PARSER ───────────────────────────────────────────
+// ── Helmet ────────────────────────────────────────────────
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false,
+}))
+
+// ── Body parser ───────────────────────────────────────────
 app.use(express.json({ limit: '16kb' }))
 app.use(mongoSanitize())
 app.set('trust proxy', 1)
 
-// ── ROUTES ────────────────────────────────────────────────
-app.use('/api/contact', require('./routes/contact'))
+// ── Health check ──────────────────────────────────────────
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    success: true,
+    status: 'ok',
+    message: 'Vistaar Immigration API is running',
+    timestamp: new Date().toISOString(),
+  })
+})
+
+// ── Routes ────────────────────────────────────────────────
+app.use('/api/contact', contactRouter)
 
 // ── 404 ───────────────────────────────────────────────────
-app.use((req, res) =>
+app.use((_req, res) =>
   res.status(404).json({ success: false, message: 'Route not found' })
 )
 
-// ── ERROR HANDLER ─────────────────────────────────────────
+// ── Error handler ─────────────────────────────────────────
 app.use((err, req, res, next) => {
   if (err.message && err.message.startsWith('CORS blocked')) {
     return res.status(403).json({ success: false, message: err.message })
@@ -54,7 +66,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: 'Internal server error' })
 })
 
-// ── CONNECT DB → START SERVER ─────────────────────────────
+// ── Connect DB → Start server ─────────────────────────────
 mongoose
   .connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 })
   .then(() => {
