@@ -24,7 +24,7 @@ const navLinks = [
       { label: 'PR / Immigration', path: '/contact', desc: 'Permanent residency pathways' },
     ]
   },
-  { label: 'About', path: null, comingSoon: true },
+  { label: 'About', path: '/about' },
   { label: 'Blog', path: '/blog' },
   { label: 'Contact', path: '/contact' },
 ]
@@ -75,16 +75,21 @@ export default function Navbar() {
             <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-              className="flex-shrink-0"
-              style={{
-                width: '84px',
-                height: '84px',
-                backgroundImage: `url(${logo})`,
-                backgroundSize: '110%',
-                backgroundPosition: 'center 8%',
-                backgroundRepeat: 'no-repeat',
-              }}
-            />
+              className="flex-shrink-0 overflow-hidden"
+              style={{ width: '84px', height: '84px' }}
+            >
+              <img
+                src={logo}
+                alt="Vistaar Immigration"
+                fetchPriority="high"
+                style={{
+                  width: '110%',
+                  height: 'auto',
+                  marginLeft: '-5%',
+                  display: 'block',
+                }}
+              />
+            </motion.div>
             <div className="flex flex-col leading-none select-none">
               <span
                 className="font-extrabold transition-colors duration-500"
@@ -329,9 +334,9 @@ export default function Navbar() {
                   <div className="overflow-hidden flex-shrink-0" style={{ width: '40px', height: '40px' }}>
                     <img
                       src={logo}
-                      alt=""
-                      aria-hidden="true"
-                      style={{ width: '40px', height: '80px', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
+                      alt="Vistaar Immigration"
+                      fetchPriority="high"
+                      style={{ width: '44px', height: 'auto', marginLeft: '-2px', display: 'block' }}
                     />
                   </div>
                   <div className="flex flex-col leading-none">

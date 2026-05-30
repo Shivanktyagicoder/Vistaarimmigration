@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -71,6 +72,14 @@ export default function WorkVisa() {
     const current = heroSlides[slide]
 
     return (
+        <>
+        <Helmet>
+            <title>Work Visa — UK Skilled Worker &amp; PSW | Vistaar Immigration</title>
+            <meta name="description" content="UK Skilled Worker Visa, Graduate Route (PSW) and international work permits. Expert immigration support with a 98% success rate. Book a free consultation." />
+            <meta property="og:title" content="Work Visa Services — Vistaar Immigration" />
+            <meta property="og:url" content="https://vistaarimmigration.com/work-visa" />
+            <link rel="canonical" href="https://vistaarimmigration.com/work-visa" />
+        </Helmet>
         <div style={{ background: '#F8FAFC', minHeight: '100vh' }}>
 
             {/* ── HERO — starts at y=0 so transparent navbar sees dark bg ── */}
@@ -264,5 +273,6 @@ export default function WorkVisa() {
                 </div>
             </div>
         </div>
+        </>
     )
 }

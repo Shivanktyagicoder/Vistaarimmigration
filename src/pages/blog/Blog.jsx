@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -213,6 +214,14 @@ export default function Blog() {
     const hasMore = regularRaw.length > visibleCount
 
     return (
+        <>
+        <Helmet>
+            <title>Immigration Blog — Visa Tips &amp; Guides | Vistaar Immigration</title>
+            <meta name="description" content="Expert immigration guides, visa tips and country-specific advice from Vistaar Immigration. Stay informed on UK, Canada, Schengen and more." />
+            <meta property="og:title" content="Immigration Blog — Vistaar Immigration" />
+            <meta property="og:url" content="https://vistaarimmigration.com/blog" />
+            <link rel="canonical" href="https://vistaarimmigration.com/blog" />
+        </Helmet>
         <div style={{ background: '#F8FAFC', minHeight: '100vh' }}>
 
             {/* ── HERO ── */}
@@ -603,5 +612,6 @@ export default function Blog() {
                 )}
             </AnimatePresence>
         </div>
+        </>
     )
 }

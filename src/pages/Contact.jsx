@@ -9,6 +9,8 @@ import {
   AlertCircle, Clock, Shield, Award, Headphones,
 } from 'lucide-react'
 
+import { Helmet } from 'react-helmet-async'
+
 const API_URL = import.meta.env.VITE_API_URL || 'https://vistaarimmigration.onrender.com'
 
 // ── VALIDATION ───────────────────────────────────────────────────────────────
@@ -126,7 +128,7 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...data,
-          phone: `${phoneCode.replace('-US', '')} ${data.phone}`,
+          countryCode: phoneCode.replace('-US', ''),
         }),
       })
 
@@ -149,6 +151,14 @@ export default function Contact() {
   }
 
   return (
+    <>
+    <Helmet>
+      <title>Book a Free Consultation — Vistaar Immigration</title>
+      <meta name="description" content="Book a free immigration consultation with Vistaar Immigration. Certified specialists respond within 2 hours. Study, work, visitor and PR visas for UK, Canada, USA and more." />
+      <meta property="og:title" content="Contact Vistaar Immigration — Free Consultation" />
+      <meta property="og:url" content="https://vistaarimmigration.com/contact" />
+      <link rel="canonical" href="https://vistaarimmigration.com/contact" />
+    </Helmet>
     <div
       className="min-h-screen w-full overflow-x-hidden"
       style={{ background: 'linear-gradient(135deg, #060E1A 0%, #0A1628 50%, #060E1A 100%)' }}
@@ -443,5 +453,6 @@ export default function Contact() {
         </div>
       </div>
     </div>
+    </>
   )
 }

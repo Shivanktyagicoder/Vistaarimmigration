@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
-  MapPin, Phone, Mail, Globe, ArrowRight,
+  MapPin, Phone, Mail, Globe,
   MessageCircle, Clock, Shield, Award, ChevronRight
 } from 'lucide-react'
 
@@ -277,8 +277,8 @@ export default function Footer() {
               style={{ height: '180px', border: '1px solid rgba(255,255,255,0.08)' }}
             >
               <iframe
-                title="Vistaar Immigration Office"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.690!2d-0.1276!3d51.5074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604ce3941eb1f%3A0x1a5342fdf089c627!2sWestminster%2C%20London!5e0!3m2!1sen!2suk!4v1234567890"
+                title="Vistaar Immigration Office — London"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19866.72!2d-0.1340!3d51.5152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604b900d26973%3A0x4291f3172409ea92!2sLondon%20W1%2C%20UK!5e0!3m2!1sen!2suk!4v1700000000000"
                 width="100%"
                 height="100%"
                 style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) saturate(0.8)' }}
@@ -341,16 +341,20 @@ export default function Footer() {
             &nbsp;·&nbsp; London, United Kingdom
           </p>
           <div className="flex items-center gap-5">
-            {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((t, i) => (
+            {[
+              { label: 'Privacy Policy', to: '/privacy' },
+              { label: 'Terms of Service', to: '/terms' },
+              { label: 'Cookie Policy', to: '/cookies' },
+            ].map((t, i) => (
               <Link
                 key={i}
-                to="/"
+                to={t.to}
                 className="text-xs transition-colors duration-200"
                 style={{ color: 'rgba(255,255,255,0.25)' }}
                 onMouseEnter={e => { e.currentTarget.style.color = '#14B8A6' }}
                 onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.25)' }}
               >
-                {t}
+                {t.label}
               </Link>
             ))}
           </div>

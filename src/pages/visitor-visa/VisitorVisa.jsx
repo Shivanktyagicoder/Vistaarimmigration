@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -20,6 +21,14 @@ export default function VisitorVisa() {
     }
 
     return (
+        <>
+        <Helmet>
+            <title>Visitor Visa — UK, USA, Canada &amp; Schengen | Vistaar Immigration</title>
+            <meta name="description" content="Visitor visa assistance for UK, USA, Canada, Australia and Schengen. Tourism, family visits and medical travel. Expert preparation and 98% success rate." />
+            <meta property="og:title" content="Visitor Visa Services — Vistaar Immigration" />
+            <meta property="og:url" content="https://vistaarimmigration.com/visitor-visa" />
+            <link rel="canonical" href="https://vistaarimmigration.com/visitor-visa" />
+        </Helmet>
         <div style={{ background: '#F8FAFC', minHeight: '100vh' }}>
 
             {/* ── HERO ── */}
@@ -458,6 +467,7 @@ export default function VisitorVisa() {
                 )}
             </AnimatePresence>
         </div>
+        </>
     )
 }
 

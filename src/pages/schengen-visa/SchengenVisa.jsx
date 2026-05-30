@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -295,6 +296,14 @@ export default function SchengenVisa() {
     const activeVisa = activeTab === 'tourist' ? schengenData.tourist : schengenData.business
 
     return (
+        <>
+        <Helmet>
+            <title>Schengen Visa — 26 Countries, One Application | Vistaar Immigration</title>
+            <meta name="description" content="Apply for a Schengen visa with expert guidance. Tourist and business visas for all 26 Schengen countries. Maximum approval chances with Vistaar Immigration." />
+            <meta property="og:title" content="Schengen Visa Services — Vistaar Immigration" />
+            <meta property="og:url" content="https://vistaarimmigration.com/schengen-visa" />
+            <link rel="canonical" href="https://vistaarimmigration.com/schengen-visa" />
+        </Helmet>
         <div style={{ background: '#F8FAFC', minHeight: '100vh' }}>
 
             {/* ── HERO ── */}
@@ -513,5 +522,6 @@ export default function SchengenVisa() {
                 </AnimatePresence>
             </div>
         </div>
+        </>
     )
 }

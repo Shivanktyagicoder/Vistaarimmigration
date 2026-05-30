@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Clock, TrendingUp } from 'lucide-react'
@@ -7,6 +8,14 @@ const comingSoon = []
 
 export default function StudyVisa() {
     return (
+        <>
+        <Helmet>
+            <title>Study Visa — UK, Canada, Australia, USA | Vistaar Immigration</title>
+            <meta name="description" content="Expert student visa assistance for UK, Canada, Australia, USA and Europe. University selection, application prep and visa submission — 98% success rate." />
+            <meta property="og:title" content="Study Visa Services — Vistaar Immigration" />
+            <meta property="og:url" content="https://vistaarimmigration.com/study-visa" />
+            <link rel="canonical" href="https://vistaarimmigration.com/study-visa" />
+        </Helmet>
         <div style={{ background: '#F8FAFC', minHeight: '100vh' }}>
 
             {/* ── HEADER — starts at y=0 so transparent navbar sees dark bg ── */}
@@ -145,5 +154,6 @@ export default function StudyVisa() {
                 </div>
             </div>
         </div>
+        </>
     )
 }
