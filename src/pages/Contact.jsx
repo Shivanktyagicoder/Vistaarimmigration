@@ -1,3 +1,9 @@
+/**
+ * Contact page — professional clean design.
+ *
+ * Light background, white form card, labeled inputs, corporate feel.
+ * No dark/gaming aesthetic — designed to match an immigration law firm.
+ */
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -7,23 +13,23 @@ import {
   User, Mail, Phone, Globe, MapPin, MessageSquare,
   ArrowRight, Loader2, CheckCircle, ChevronDown,
   AlertCircle, Clock, Shield, Award, Headphones,
+  MessageCircle,
 } from 'lucide-react'
-
 import { Helmet } from 'react-helmet-async'
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://vistaarimmigration.onrender.com'
 
-// ── VALIDATION ───────────────────────────────────────────────────────────────
+// ── Validation schema ────────────────────────────────────────────────────────
 const schema = z.object({
   fullName: z.string().min(3, 'Please enter your full name'),
-  email:    z.string().email('Please enter a valid email'),
+  email:    z.string().email('Please enter a valid email address'),
   phone:    z.string().min(7, 'Enter a valid phone number').max(15, 'Too long'),
   service:  z.string().min(1, 'Please select a service'),
-  country:  z.string().min(1, 'Please select a country'),
-  message:  z.string().min(1, 'Please enter your message').max(2000, 'Max 2000 characters'),
+  country:  z.string().min(1, 'Please select a destination country'),
+  message:  z.string().min(10, 'Please tell us a bit more (min 10 characters)').max(2000, 'Max 2000 characters'),
 })
 
-// ── STATIC DATA ──────────────────────────────────────────────────────────────
+// ── Static data ──────────────────────────────────────────────────────────────
 const services = [
   'Student Visa', 'Work Permit', 'PR / Immigration',
   'Business Visa', 'Schengen Visa', 'Visitor Visa', 'Dependent Visa',
@@ -35,85 +41,175 @@ const countries = [
 ]
 
 const countryCodes = [
-  { code: '+44',    label: '🇬🇧 +44' },
-  { code: '+1',     label: '🇨🇦 +1'  },
-  { code: '+91',    label: '🇮🇳 +91' },
-  { code: '+61',    label: '🇦🇺 +61' },
-  { code: '+1-US',  label: '🇺🇸 +1'  },
-  { code: '+64',    label: '🇳🇿 +64' },
-  { code: '+49',    label: '🇩🇪 +49' },
+  { code: '+44',   label: '🇬🇧 +44' },
+  { code: '+1',    label: '🇨🇦 +1'  },
+  { code: '+91',   label: '🇮🇳 +91' },
+  { code: '+61',   label: '🇦🇺 +61' },
+  { code: '+1-US', label: '🇺🇸 +1'  },
+  { code: '+64',   label: '🇳🇿 +64' },
+  { code: '+49',   label: '🇩🇪 +49' },
 ]
 
 const trustPoints = [
-  { icon: Award,      title: '98% Success Rate',     desc: 'Across all visa categories' },
-  { icon: Clock,      title: 'Response in 2 Hours',  desc: 'Mon – Sat, 9 AM – 6 PM GMT' },
-  { icon: Shield,     title: 'Fully Certified',      desc: 'OISC regulated consultants' },
-  { icon: Headphones, title: 'End-to-End Support',   desc: 'From application to approval' },
+  {
+    icon: Award,
+    title: '98% Success Rate',
+    desc: 'Across all visa categories we handle',
+    color: '#0D9488',
+    bg: '#F0FDFA',
+    border: '#CCFBF1',
+  },
+  {
+    icon: Clock,
+    title: 'Response Within 2 Hours',
+    desc: 'Mon – Sat, 9 AM – 6 PM GMT',
+    color: '#0369A1',
+    bg: '#F0F9FF',
+    border: '#BAE6FD',
+  },
+  {
+    icon: Shield,
+    title: 'OISC Regulated',
+    desc: 'Authorised, certified immigration advisors',
+    color: '#7C3AED',
+    bg: '#FAF5FF',
+    border: '#E9D5FF',
+  },
+  {
+    icon: Headphones,
+    title: 'End-to-End Support',
+    desc: 'From documents to visa approval',
+    color: '#B45309',
+    bg: '#FFFBEB',
+    border: '#FDE68A',
+  },
 ]
 
-// ── FIELD COMPONENTS ─────────────────────────────────────────────────────────
-function Field({ icon: Icon, register, name, placeholder, type = 'text', error }) {
+// ── Input label component ────────────────────────────────────────────────────
+function Label({ children, required }) {
+  return (
+    <label
+      style={{
+        display: 'block',
+        fontFamily: 'Inter, sans-serif',
+        fontSize: '13px',
+        fontWeight: 600,
+        color: '#374151',
+        marginBottom: '6px',
+      }}
+    >
+      {children}
+      {required && <span style={{ color: '#EF4444', marginLeft: '3px' }}>*</span>}
+    </label>
+  )
+}
+
+// ── Text / email input ───────────────────────────────────────────────────────
+function Field({ label, icon: Icon, register, name, placeholder, type = 'text', error }) {
   const [focused, setFocused] = useState(false)
   return (
     <div>
-      <motion.div
-        animate={{ borderColor: error ? 'rgba(239,68,68,0.6)' : focused ? 'rgba(20,184,166,0.55)' : 'rgba(255,255,255,0.1)' }}
-        transition={{ duration: 0.18 }}
-        className="flex items-center h-[52px] rounded-xl px-4 gap-3"
-        style={{ background: focused ? 'rgba(20,184,166,0.05)' : 'rgba(255,255,255,0.04)', border: '1px solid' }}
+      {label && <Label required>{label}</Label>}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '48px',
+          borderRadius: '10px',
+          padding: '0 14px',
+          gap: '10px',
+          background: '#FFFFFF',
+          border: `1.5px solid ${error ? '#FCA5A5' : focused ? '#14B8A6' : '#E5E7EB'}`,
+          transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+          boxShadow: focused ? '0 0 0 3px rgba(20,184,166,0.1)' : 'none',
+        }}
       >
-        <Icon size={16} color={error ? '#EF4444' : focused ? '#14B8A6' : 'rgba(255,255,255,0.3)'} />
+        {Icon && <Icon size={15} color={error ? '#EF4444' : focused ? '#0D9488' : '#9CA3AF'} style={{ flexShrink: 0 }} />}
         <input
           type={type}
           {...register(name)}
           placeholder={placeholder}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="flex-1 bg-transparent outline-none text-sm text-white placeholder:text-white/25"
-          style={{ fontFamily: 'Inter, sans-serif' }}
+          style={{
+            flex: 1,
+            background: 'transparent',
+            outline: 'none',
+            border: 'none',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '14px',
+            color: '#111827',
+          }}
         />
-      </motion.div>
-      {error && <p className="text-red-400 text-xs mt-1.5 ml-1">{error}</p>}
+      </div>
+      {error && (
+        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: '#EF4444', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <AlertCircle size={11} /> {error}
+        </p>
+      )}
     </div>
   )
 }
 
-function SelectField({ icon: Icon, register, name, options, placeholder, error }) {
+// ── Select / dropdown ────────────────────────────────────────────────────────
+function SelectField({ label, icon: Icon, register, name, options, placeholder, error }) {
   const [focused, setFocused] = useState(false)
   return (
     <div>
-      <motion.div
-        animate={{ borderColor: error ? 'rgba(239,68,68,0.6)' : focused ? 'rgba(20,184,166,0.55)' : 'rgba(255,255,255,0.1)' }}
-        transition={{ duration: 0.18 }}
-        className="flex items-center h-[52px] rounded-xl px-4 gap-3"
-        style={{ background: focused ? 'rgba(20,184,166,0.05)' : 'rgba(255,255,255,0.04)', border: '1px solid' }}
+      {label && <Label required>{label}</Label>}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '48px',
+          borderRadius: '10px',
+          padding: '0 14px',
+          gap: '10px',
+          background: '#FFFFFF',
+          border: `1.5px solid ${error ? '#FCA5A5' : focused ? '#14B8A6' : '#E5E7EB'}`,
+          transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+          boxShadow: focused ? '0 0 0 3px rgba(20,184,166,0.1)' : 'none',
+          position: 'relative',
+        }}
       >
-        <Icon size={16} color={error ? '#EF4444' : focused ? '#14B8A6' : 'rgba(255,255,255,0.3)'} />
+        {Icon && <Icon size={15} color={error ? '#EF4444' : focused ? '#0D9488' : '#9CA3AF'} style={{ flexShrink: 0 }} />}
         <select
           {...register(name)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="flex-1 bg-transparent outline-none text-sm text-white appearance-none cursor-pointer"
-          style={{ fontFamily: 'Inter, sans-serif' }}
+          style={{
+            flex: 1,
+            background: 'transparent',
+            outline: 'none',
+            border: 'none',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '14px',
+            color: '#111827',
+            appearance: 'none',
+            cursor: 'pointer',
+          }}
         >
-          <option value="" style={{ background: '#0D1B2E' }}>{placeholder}</option>
-          {options.map(o => (
-            <option key={o} value={o} style={{ background: '#0D1B2E' }}>{o}</option>
-          ))}
+          <option value="" style={{ color: '#9CA3AF' }}>{placeholder}</option>
+          {options.map(o => <option key={o} value={o}>{o}</option>)}
         </select>
-        <ChevronDown size={14} color="rgba(255,255,255,0.25)" />
-      </motion.div>
-      {error && <p className="text-red-400 text-xs mt-1.5 ml-1">{error}</p>}
+        <ChevronDown size={14} color="#9CA3AF" style={{ flexShrink: 0 }} />
+      </div>
+      {error && (
+        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: '#EF4444', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <AlertCircle size={11} /> {error}
+        </p>
+      )}
     </div>
   )
 }
 
-// ── MAIN COMPONENT ───────────────────────────────────────────────────────────
+// ── Main page ────────────────────────────────────────────────────────────────
 export default function Contact() {
   const [loading,     setLoading]     = useState(false)
   const [submitted,   setSubmitted]   = useState(false)
   const [submitError, setSubmitError] = useState(null)
   const [phoneCode,   setPhoneCode]   = useState('+44')
+  const [msgFocused,  setMsgFocused]  = useState(false)
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
@@ -123,8 +219,7 @@ export default function Contact() {
     setLoading(true)
     setSubmitError(null)
 
-    // Abort controller gives us a clean 15-second timeout.
-    // If Render is still waking up the user sees a clear message and WhatsApp fallback.
+    // 15-second timeout — gives Render free tier time to wake up
     const controller = new AbortController()
     const timeoutId  = setTimeout(() => controller.abort(), 15000)
 
@@ -149,9 +244,8 @@ export default function Contact() {
       reset()
     } catch (err) {
       clearTimeout(timeoutId)
-
       if (err.name === 'AbortError') {
-        setSubmitError('The server took too long to respond. Please try again in a moment, or reach us directly on WhatsApp.')
+        setSubmitError('The server took too long to respond. Please try again, or reach us on WhatsApp.')
       } else if (err.message === 'Failed to fetch') {
         setSubmitError('Cannot reach server. Please try again or contact us on WhatsApp.')
       } else {
@@ -164,307 +258,633 @@ export default function Contact() {
 
   return (
     <>
-    <Helmet>
-      <title>Book a Free Consultation — Vistaar Immigration</title>
-      <meta name="description" content="Book a free immigration consultation with Vistaar Immigration. Certified specialists respond within 2 hours. Study, work, visitor and PR visas for UK, Canada, USA and more." />
-      <meta property="og:title" content="Contact Vistaar Immigration — Free Consultation" />
-      <meta property="og:url" content="https://vistaarimmigration.com/contact" />
-      <link rel="canonical" href="https://vistaarimmigration.com/contact" />
-    </Helmet>
-    <div
-      className="min-h-screen w-full overflow-x-hidden"
-      style={{ background: 'linear-gradient(135deg, #060E1A 0%, #0A1628 50%, #060E1A 100%)' }}
-    >
-      {/* Ambient glows — hidden on mobile to prevent GPU lag */}
-      <div className="hidden md:block fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full opacity-[0.07]"
-          style={{ background: '#14B8A6', filter: 'blur(100px)', transform: 'translateY(-30%)' }} />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full opacity-[0.05]"
-          style={{ background: '#38BDF8', filter: 'blur(80px)', transform: 'translateY(30%)' }} />
-      </div>
+      <Helmet>
+        <title>Book a Free Consultation — Vistaar Immigration</title>
+        <meta name="description" content="Book a free immigration consultation with Vistaar Immigration. Certified specialists respond within 2 hours. Study, work, visitor and PR visas for UK, Canada, USA and more." />
+        <meta property="og:title" content="Contact Vistaar Immigration — Free Consultation" />
+        <meta property="og:url" content="https://vistaarimmigration.com/contact" />
+        <link rel="canonical" href="https://vistaarimmigration.com/contact" />
+      </Helmet>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-16 pt-24 md:pt-32">
+      <div style={{ background: '#F8FAFC', minHeight: '100vh' }}>
 
-        {/* ── PAGE HEADER ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-10 md:mb-16"
+        {/* ── PAGE HEADER ──────────────────────────────────────────────────── */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #0F172A 0%, #0D9488 100%)',
+            paddingTop: '100px',
+            paddingBottom: '60px',
+          }}
         >
-          <div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 text-xs font-semibold tracking-widest uppercase"
-            style={{ background: 'rgba(20,184,166,0.1)', border: '1px solid rgba(20,184,166,0.25)', color: '#5EEAD4', fontFamily: 'Inter, sans-serif' }}
-          >
-            Free Consultation
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '6px 16px',
+                  borderRadius: '999px',
+                  background: 'rgba(255,255,255,0.12)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  marginBottom: '18px',
+                }}
+              >
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.9)' }}>
+                  Free Consultation
+                </span>
+              </div>
+
+              <h1
+                style={{
+                  fontFamily: 'Poppins, sans-serif',
+                  fontSize: 'clamp(1.9rem, 4vw, 3rem)',
+                  fontWeight: 800,
+                  color: '#FFFFFF',
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.15,
+                  marginBottom: '14px',
+                }}
+              >
+                Start Your Visa Journey Today
+              </h1>
+
+              <p
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: '15px',
+                  color: 'rgba(255,255,255,0.75)',
+                  maxWidth: '520px',
+                  margin: '0 auto',
+                  lineHeight: 1.7,
+                }}
+              >
+                Fill in the form below and our certified immigration specialists will
+                review your profile and respond within 2 hours.
+              </p>
+            </motion.div>
           </div>
-          <h1
-            className="font-bold text-white mb-4"
-            style={{ fontFamily: 'Poppins, sans-serif', fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', letterSpacing: '-0.03em', lineHeight: 1.1 }}
-          >
-            Start Your{' '}
-            <span style={{ background: 'linear-gradient(90deg, #14B8A6, #38BDF8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Visa Journey
-            </span>
-          </h1>
-          <p className="max-w-xl mx-auto text-[15px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'Inter, sans-serif' }}>
-            Fill in the form and our certified immigration specialists will review your profile
-            and contact you within 2 hours.
-          </p>
-        </motion.div>
+        </div>
 
-        {/* ── TWO-COLUMN LAYOUT ── */}
-        <div className="grid lg:grid-cols-[380px_1fr] gap-8 items-start">
+        {/* ── MAIN CONTENT ─────────────────────────────────────────────────── */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12" style={{ paddingTop: '48px', paddingBottom: '80px' }}>
+          <div className="grid lg:grid-cols-[340px_1fr] gap-8 items-start">
 
-          {/* ── LEFT PANEL ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-4 min-w-0"
-          >
-            {/* Trust points */}
-            {trustPoints.map((pt, i) => (
-              <motion.div
-                key={pt.title}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 + i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-start gap-4 p-5 rounded-2xl"
-                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+            {/* ── LEFT: Info panel ────────────────────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {/* Why choose us */}
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid #E5E7EB',
+                  borderRadius: '16px',
+                  padding: '28px',
+                  marginBottom: '16px',
+                  boxShadow: '0 1px 8px rgba(0,0,0,0.05)',
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: 'Poppins, sans-serif',
+                    fontSize: '15px',
+                    fontWeight: 700,
+                    color: '#0F172A',
+                    marginBottom: '20px',
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  Why Choose Vistaar?
+                </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  {trustPoints.map((pt, i) => (
+                    <motion.div
+                      key={pt.title}
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 + i * 0.07, duration: 0.4 }}
+                      style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}
+                    >
+                      <div
+                        style={{
+                          width: '38px',
+                          height: '38px',
+                          borderRadius: '10px',
+                          background: pt.bg,
+                          border: `1px solid ${pt.border}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <pt.icon size={17} color={pt.color} />
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            fontFamily: 'Inter, sans-serif',
+                            fontSize: '13.5px',
+                            fontWeight: 600,
+                            color: '#111827',
+                            marginBottom: '2px',
+                          }}
+                        >
+                          {pt.title}
+                        </p>
+                        <p
+                          style={{
+                            fontFamily: 'Inter, sans-serif',
+                            fontSize: '12.5px',
+                            color: '#6B7280',
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          {pt.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Contact details card */}
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid #E5E7EB',
+                  borderRadius: '16px',
+                  padding: '24px 28px',
+                  marginBottom: '16px',
+                  boxShadow: '0 1px 8px rgba(0,0,0,0.05)',
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: 'Poppins, sans-serif',
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    color: '#0F172A',
+                    marginBottom: '14px',
+                  }}
+                >
+                  Direct Contact
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <a
+                    href="tel:+447344896264"
+                    style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
+                  >
+                    <Phone size={15} color="#0D9488" />
+                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13.5px', color: '#374151', fontWeight: 500 }}>
+                      +44 7344 896 264
+                    </span>
+                  </a>
+                  <a
+                    href="mailto:info@vistaarimmigration.com"
+                    style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
+                  >
+                    <Mail size={15} color="#0D9488" />
+                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13.5px', color: '#374151', fontWeight: 500 }}>
+                      info@vistaarimmigration.com
+                    </span>
+                  </a>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <MapPin size={15} color="#0D9488" />
+                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13.5px', color: '#374151', fontWeight: 500 }}>
+                      London, United Kingdom
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* WhatsApp CTA */}
+              <motion.a
+                href="https://wa.me/447344896264"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '18px 20px',
+                  borderRadius: '14px',
+                  background: '#F0FDF4',
+                  border: '1.5px solid #86EFAC',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  boxShadow: '0 1px 6px rgba(0,0,0,0.04)',
+                }}
               >
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: 'rgba(20,184,166,0.12)', border: '1px solid rgba(20,184,166,0.2)' }}
+                  style={{
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '12px',
+                    background: '#DCFCE7',
+                    border: '1px solid #BBF7D0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
                 >
-                  <pt.icon size={18} color="#14B8A6" />
+                  <MessageCircle size={20} color="#16A34A" />
                 </div>
                 <div>
-                  <p className="font-semibold text-white text-[14px]" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    {pt.title}
+                  <p style={{ fontFamily: 'Poppins, sans-serif', fontSize: '13.5px', fontWeight: 700, color: '#15803D', marginBottom: '2px' }}>
+                    Chat on WhatsApp
                   </p>
-                  <p className="text-[12.5px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter, sans-serif' }}>
-                    {pt.desc}
+                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: '#4B7A55' }}>
+                    +44 7344 896 264 — instant reply
                   </p>
                 </div>
-              </motion.div>
-            ))}
+              </motion.a>
+            </motion.div>
 
-            {/* WhatsApp card */}
-            <motion.a
-              href="https://wa.me/447344896264"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 16 }}
+            {/* ── RIGHT: Form card ─────────────────────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.55, duration: 0.5 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-4 p-5 rounded-2xl cursor-pointer"
-              style={{ background: 'rgba(37,211,102,0.07)', border: '1px solid rgba(37,211,102,0.2)' }}
+              transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                background: '#FFFFFF',
+                border: '1px solid #E5E7EB',
+                borderRadius: '20px',
+                padding: '36px',
+                boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
+              }}
             >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'rgba(37,211,102,0.15)' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-              </div>
-              <div>
-                <p className="font-semibold text-[14px]" style={{ color: '#25D366', fontFamily: 'Poppins, sans-serif' }}>
-                  Chat on WhatsApp
-                </p>
-                <p className="text-[12px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter, sans-serif' }}>
-                  +44 7344 896 264 — instant reply
-                </p>
-              </div>
-            </motion.a>
-          </motion.div>
+              {/* Top teal accent bar */}
+              <div
+                style={{
+                  height: '4px',
+                  borderRadius: '4px',
+                  background: 'linear-gradient(90deg, #0D9488, #14B8A6)',
+                  marginBottom: '28px',
+                }}
+              />
 
-          {/* ── RIGHT: FORM CARD ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="rounded-3xl p-6 sm:p-8 md:p-10 w-full min-w-0"
-            style={{
-              background: 'rgba(13,27,46,0.85)',
-              border: '1px solid rgba(255,255,255,0.09)',
-              boxShadow: '0 24px 80px rgba(0,0,0,0.4)',
-            }}
-          >
-            {/* Top gradient line */}
-            <div className="h-px mb-8 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(20,184,166,0.5), transparent)' }} />
-
-            <AnimatePresence mode="wait">
-              {submitted ? (
-                /* ── SUCCESS STATE ── */
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.94 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="py-12 flex flex-col items-center text-center"
-                >
+              <AnimatePresence mode="wait">
+                {submitted ? (
+                  /* ── SUCCESS STATE ── */
                   <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 18, delay: 0.1 }}
-                    className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
-                    style={{ background: 'rgba(20,184,166,0.12)', border: '1px solid rgba(20,184,166,0.3)' }}
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.35 }}
+                    style={{ padding: '40px 0', textAlign: 'center' }}
                   >
-                    <CheckCircle size={38} color="#14B8A6" />
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 200, damping: 18, delay: 0.1 }}
+                      style={{
+                        width: '72px',
+                        height: '72px',
+                        borderRadius: '50%',
+                        background: '#F0FDFA',
+                        border: '2px solid #99F6E4',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 20px',
+                      }}
+                    >
+                      <CheckCircle size={34} color="#0D9488" />
+                    </motion.div>
+
+                    <h2
+                      style={{
+                        fontFamily: 'Poppins, sans-serif',
+                        fontSize: '22px',
+                        fontWeight: 800,
+                        color: '#0F172A',
+                        letterSpacing: '-0.02em',
+                        marginBottom: '10px',
+                      }}
+                    >
+                      Enquiry Submitted Successfully
+                    </h2>
+
+                    <p
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '14px',
+                        color: '#6B7280',
+                        lineHeight: 1.7,
+                        maxWidth: '400px',
+                        margin: '0 auto 12px',
+                      }}
+                    >
+                      Our immigration team has received your details. You will receive a
+                      confirmation email shortly, and a specialist will contact you within
+                      2 business hours.
+                    </p>
+
+                    <p
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '13px',
+                        color: '#9CA3AF',
+                        marginBottom: '28px',
+                      }}
+                    >
+                      Check your inbox (and spam folder) for your confirmation email.
+                    </p>
+
+                    <button
+                      onClick={() => setSubmitted(false)}
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '13px',
+                        fontWeight: 600,
+                        color: '#0D9488',
+                        background: '#F0FDFA',
+                        border: '1.5px solid #99F6E4',
+                        borderRadius: '10px',
+                        padding: '10px 22px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Submit Another Enquiry
+                    </button>
                   </motion.div>
-                  <h2 className="text-white font-bold text-2xl mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    Application Submitted!
-                  </h2>
-                  <p className="max-w-sm text-[14px] leading-relaxed mb-8"
-                    style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'Inter, sans-serif' }}>
-                    Our immigration team has received your details and will get back to you within 2 business hours
-                    via email or WhatsApp.
-                  </p>
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => setSubmitted(false)}
-                    className="px-6 py-2.5 rounded-xl text-sm font-semibold"
-                    style={{ background: 'rgba(20,184,166,0.1)', border: '1px solid rgba(20,184,166,0.3)', color: '#14B8A6', fontFamily: 'Poppins, sans-serif' }}
-                  >
-                    Submit Another
-                  </motion.button>
-                </motion.div>
-              ) : (
-                /* ── FORM ── */
-                <motion.form
-                  key="form"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onSubmit={handleSubmit(onSubmit)}
-                  className="space-y-4"
-                >
-                  {/* Name + Email */}
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <Field icon={User} register={register} name="fullName" placeholder="Full Name" error={errors.fullName?.message} />
-                    <Field icon={Mail} register={register} name="email" type="email" placeholder="Email Address" error={errors.email?.message} />
-                  </div>
 
-                  {/* Phone with country code */}
-                  <div className="min-w-0">
-                    <div
-                      className="flex rounded-xl overflow-hidden h-[52px] w-full"
-                      style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)' }}
+                ) : (
+                  /* ── FORM ── */
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onSubmit={handleSubmit(onSubmit)}
+                  >
+                    <h2
+                      style={{
+                        fontFamily: 'Poppins, sans-serif',
+                        fontSize: '20px',
+                        fontWeight: 700,
+                        color: '#0F172A',
+                        letterSpacing: '-0.02em',
+                        marginBottom: '6px',
+                      }}
                     >
-                      <select
-                        value={phoneCode}
-                        onChange={e => setPhoneCode(e.target.value)}
-                        className="bg-transparent text-sm text-white outline-none cursor-pointer px-3 flex-shrink-0"
-                        style={{ borderRight: '1px solid rgba(255,255,255,0.1)', fontFamily: 'Inter, sans-serif', minWidth: '90px' }}
-                      >
-                        {countryCodes.map(c => (
-                          <option key={c.code} value={c.code} style={{ background: '#0D1B2E' }}>{c.label}</option>
-                        ))}
-                      </select>
-                      <div className="flex items-center gap-3 px-4 flex-1">
-                        <Phone size={16} color="rgba(255,255,255,0.3)" />
-                        <input
-                          type="tel"
-                          placeholder="Phone Number"
-                          {...register('phone')}
-                          className="flex-1 bg-transparent outline-none text-sm text-white placeholder:text-white/25"
-                          style={{ fontFamily: 'Inter, sans-serif' }}
+                      Book Your Free Consultation
+                    </h2>
+                    <p
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '13.5px',
+                        color: '#6B7280',
+                        marginBottom: '28px',
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      Complete the form below and we'll get back to you within 2 hours.
+                    </p>
+
+                    {/* Divider */}
+                    <div style={{ height: '1px', background: '#F3F4F6', marginBottom: '24px' }} />
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+                      {/* Row 1: Name + Email */}
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <Field
+                          label="Full Name"
+                          icon={User}
+                          register={register}
+                          name="fullName"
+                          placeholder="e.g. John Smith"
+                          error={errors.fullName?.message}
+                        />
+                        <Field
+                          label="Email Address"
+                          icon={Mail}
+                          register={register}
+                          name="email"
+                          type="email"
+                          placeholder="e.g. john@email.com"
+                          error={errors.email?.message}
                         />
                       </div>
-                    </div>
-                    {errors.phone && <p className="text-red-400 text-xs mt-1.5 ml-1">{errors.phone.message}</p>}
-                  </div>
 
-                  {/* Service + Country */}
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <SelectField icon={Globe} register={register} name="service" placeholder="Select Service" options={services} error={errors.service?.message} />
-                    <SelectField icon={MapPin} register={register} name="country" placeholder="Preferred Country" options={countries} error={errors.country?.message} />
-                  </div>
+                      {/* Row 2: Phone with code */}
+                      <div>
+                        <Label required>Phone Number</Label>
+                        <div
+                          style={{
+                            display: 'flex',
+                            borderRadius: '10px',
+                            border: `1.5px solid ${errors.phone ? '#FCA5A5' : '#E5E7EB'}`,
+                            background: '#FFFFFF',
+                            overflow: 'hidden',
+                            height: '48px',
+                          }}
+                        >
+                          <select
+                            value={phoneCode}
+                            onChange={e => setPhoneCode(e.target.value)}
+                            style={{
+                              background: '#F9FAFB',
+                              border: 'none',
+                              borderRight: '1px solid #E5E7EB',
+                              outline: 'none',
+                              padding: '0 12px',
+                              fontFamily: 'Inter, sans-serif',
+                              fontSize: '13px',
+                              color: '#374151',
+                              cursor: 'pointer',
+                              flexShrink: 0,
+                              minWidth: '92px',
+                            }}
+                          >
+                            {countryCodes.map(c => (
+                              <option key={c.code} value={c.code}>{c.label}</option>
+                            ))}
+                          </select>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '0 14px', flex: 1 }}>
+                            <Phone size={15} color="#9CA3AF" style={{ flexShrink: 0 }} />
+                            <input
+                              type="tel"
+                              placeholder="Phone number"
+                              {...register('phone')}
+                              style={{
+                                flex: 1,
+                                background: 'transparent',
+                                border: 'none',
+                                outline: 'none',
+                                fontFamily: 'Inter, sans-serif',
+                                fontSize: '14px',
+                                color: '#111827',
+                              }}
+                            />
+                          </div>
+                        </div>
+                        {errors.phone && (
+                          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: '#EF4444', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <AlertCircle size={11} /> {errors.phone.message}
+                          </p>
+                        )}
+                      </div>
 
-                  {/* Message */}
-                  <div>
-                    <div
-                      className="rounded-xl p-4"
-                      style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)' }}
-                    >
-                      <div className="flex gap-3">
-                        <MessageSquare size={16} color="rgba(255,255,255,0.3)" className="mt-0.5 flex-shrink-0" />
-                        <textarea
-                          rows={4}
-                          placeholder="Tell us about your immigration goals..."
-                          {...register('message')}
-                          className="flex-1 bg-transparent outline-none resize-none text-sm text-white placeholder:text-white/25"
-                          style={{ fontFamily: 'Inter, sans-serif' }}
+                      {/* Row 3: Service + Country */}
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <SelectField
+                          label="Visa / Service Required"
+                          icon={Globe}
+                          register={register}
+                          name="service"
+                          placeholder="Select a service"
+                          options={services}
+                          error={errors.service?.message}
+                        />
+                        <SelectField
+                          label="Destination Country"
+                          icon={MapPin}
+                          register={register}
+                          name="country"
+                          placeholder="Select country"
+                          options={countries}
+                          error={errors.country?.message}
                         />
                       </div>
-                    </div>
-                    {errors.message && <p className="text-red-400 text-xs mt-1.5 ml-1">{errors.message.message}</p>}
-                  </div>
 
-                  {/* Error banner */}
-                  <AnimatePresence>
-                    {submitError && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        className="flex items-start gap-3 p-4 rounded-xl"
-                        style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}
+                      {/* Row 4: Message */}
+                      <div>
+                        <Label required>Your Message</Label>
+                        <div
+                          style={{
+                            borderRadius: '10px',
+                            border: `1.5px solid ${errors.message ? '#FCA5A5' : msgFocused ? '#14B8A6' : '#E5E7EB'}`,
+                            background: '#FFFFFF',
+                            padding: '12px 14px',
+                            transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+                            boxShadow: msgFocused ? '0 0 0 3px rgba(20,184,166,0.1)' : 'none',
+                          }}
+                        >
+                          <div style={{ display: 'flex', gap: '10px' }}>
+                            <MessageSquare size={15} color={msgFocused ? '#0D9488' : '#9CA3AF'} style={{ flexShrink: 0, marginTop: '2px' }} />
+                            <textarea
+                              rows={4}
+                              placeholder="Tell us about your immigration goals, current visa status, and any questions you have..."
+                              {...register('message')}
+                              onFocus={() => setMsgFocused(true)}
+                              onBlur={() => setMsgFocused(false)}
+                              style={{
+                                flex: 1,
+                                background: 'transparent',
+                                outline: 'none',
+                                border: 'none',
+                                resize: 'none',
+                                fontFamily: 'Inter, sans-serif',
+                                fontSize: '14px',
+                                color: '#111827',
+                                lineHeight: 1.6,
+                              }}
+                            />
+                          </div>
+                        </div>
+                        {errors.message && (
+                          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: '#EF4444', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <AlertCircle size={11} /> {errors.message.message}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Error banner */}
+                      <AnimatePresence>
+                        {submitError && (
+                          <motion.div
+                            initial={{ opacity: 0, y: -6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0 }}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'flex-start',
+                              gap: '10px',
+                              padding: '14px 16px',
+                              borderRadius: '10px',
+                              background: '#FEF2F2',
+                              border: '1px solid #FECACA',
+                            }}
+                          >
+                            <AlertCircle size={15} color="#EF4444" style={{ flexShrink: 0, marginTop: '1px' }} />
+                            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: '#B91C1C', lineHeight: 1.6 }}>
+                              {submitError}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {/* Submit button */}
+                      <motion.button
+                        type="submit"
+                        disabled={loading}
+                        whileHover={{ scale: loading ? 1 : 1.01 }}
+                        whileTap={{ scale: loading ? 1 : 0.99 }}
+                        style={{
+                          width: '100%',
+                          height: '52px',
+                          borderRadius: '12px',
+                          border: 'none',
+                          background: loading ? '#94A3B8' : 'linear-gradient(135deg, #0D9488, #14B8A6)',
+                          color: '#FFFFFF',
+                          fontFamily: 'Poppins, sans-serif',
+                          fontSize: '15px',
+                          fontWeight: 700,
+                          cursor: loading ? 'not-allowed' : 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '10px',
+                          boxShadow: loading ? 'none' : '0 4px 16px rgba(13,148,136,0.3)',
+                          transition: 'box-shadow 0.2s ease',
+                          letterSpacing: '-0.01em',
+                        }}
                       >
-                        <AlertCircle size={15} color="#EF4444" className="flex-shrink-0 mt-0.5" />
-                        <p className="text-[13px] leading-relaxed" style={{ color: '#FCA5A5', fontFamily: 'Inter, sans-serif' }}>
-                          {submitError}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        {loading ? (
+                          <><Loader2 size={18} className="animate-spin" /> Submitting...</>
+                        ) : (
+                          <>Submit Enquiry <ArrowRight size={17} /></>
+                        )}
+                      </motion.button>
 
-                  {/* Submit */}
-                  <motion.button
-                    type="submit"
-                    disabled={loading}
-                    whileHover={{ scale: loading ? 1 : 1.01 }}
-                    whileTap={{ scale: loading ? 1 : 0.99 }}
-                    className="relative w-full h-[52px] rounded-xl flex items-center justify-center gap-3 text-white font-semibold overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed"
-                    style={{
-                      fontFamily: 'Poppins, sans-serif',
-                      fontSize: '15px',
-                      background: 'linear-gradient(135deg, #0D9488, #14B8A6)',
-                      boxShadow: loading ? 'none' : '0 8px 28px rgba(13,148,136,0.35)',
-                    }}
-                  >
-                    {!loading && (
-                      <motion.div
-                        animate={{ x: ['-110%', '110%'] }}
-                        transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 1.5 }}
-                        className="absolute inset-0 hidden sm:block"
-                        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent)' }}
-                      />
-                    )}
-                    {loading ? (
-                      <><Loader2 size={18} className="animate-spin" /> Submitting...</>
-                    ) : (
-                      <>
-                        Submit Application Review
-                        <ArrowRight size={17} />
-                      </>
-                    )}
-                  </motion.button>
+                      {/* Footer note */}
+                      <p
+                        style={{
+                          textAlign: 'center',
+                          fontFamily: 'Inter, sans-serif',
+                          fontSize: '12px',
+                          color: '#9CA3AF',
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        🔒 Your information is kept strictly confidential and never shared with third parties.
+                        By submitting, you agree to be contacted by our immigration team.
+                      </p>
 
-                  <p className="text-center text-[11.5px]" style={{ color: 'rgba(255,255,255,0.25)', fontFamily: 'Inter, sans-serif' }}>
-                    We never share your information. By submitting you agree to be contacted by our team.
-                  </p>
-                </motion.form>
-              )}
-            </AnimatePresence>
-          </motion.div>
+                    </div>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+          </div>
         </div>
       </div>
-    </div>
     </>
   )
 }
