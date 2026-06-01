@@ -53,8 +53,8 @@ const countryCodes = [
 const trustPoints = [
   {
     icon: Award,
-    title: '98% Success Rate',
-    desc: 'Across all visa categories we handle',
+    title: 'Expert Consultants',
+    desc: 'OISC-registered advisors for every visa category',
     color: '#0D9488',
     bg: '#F0FDFA',
     border: '#CCFBF1',

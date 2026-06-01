@@ -33,7 +33,14 @@ body {
   backface-visibility: hidden;
 }
 
-/* Kill browser autofill white/yellow background on all inputs */
+/* Placeholder text — explicit color so Tailwind v4 reset doesn't mute it */
+input::placeholder,
+textarea::placeholder {
+  color: #9CA3AF;
+  opacity: 1;
+}
+
+/* Kill browser autofill yellow/blue highlight — light form theme (white background) */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -43,10 +50,10 @@ select:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus {
-  -webkit-text-fill-color: #ffffff;
-  -webkit-box-shadow: 0 0 0 1000px transparent inset;
-  box-shadow: 0 0 0 1000px transparent inset;
-  background-color: transparent !important;
+  -webkit-text-fill-color: #111827;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
+  background-color: #ffffff !important;
   transition: background-color 9999s ease-in-out 0s;
-  caret-color: #ffffff;
+  caret-color: #111827;
 }
