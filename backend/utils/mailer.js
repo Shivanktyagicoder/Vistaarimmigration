@@ -51,13 +51,17 @@ function brandHeader() {
 }
 
 // ── SMTP transporter ──────────────────────────────────────────────────────────
+// Uses Gmail SMTP (smtp.gmail.com:587 with STARTTLS).
+// Render free tier blocks most third-party SMTP but allows Gmail reliably.
+// Requires a Gmail App Password — NOT your normal Gmail password:
+//   Gmail → Google Account → Security → 2-Step Verification → App Passwords
 const transporter = nodemailer.createTransport({
-  host:   process.env.SMTP_HOST,
-  port:   Number(process.env.SMTP_PORT) || 587,
-  secure: Number(process.env.SMTP_PORT) === 465,
+  host:   'smtp.gmail.com',
+  port:   587,
+  secure: false,        // STARTTLS on 587
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: process.env.GMAIL_USER,   // your Gmail address e.g. yourname@gmail.com
+    pass: process.env.GMAIL_PASS,   // 16-char App Password (no spaces)
   },
 })
 
