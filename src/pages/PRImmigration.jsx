@@ -232,7 +232,7 @@ export default function PRImmigration() {
             >
               We guide you from first enquiry to settlement — UK Indefinite Leave to Remain,
               Canada Express Entry, Australian Skilled Migration and beyond.
-              OISC regulated. 98% approval rate.
+              OISC regulated.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -460,19 +460,10 @@ export default function PRImmigration() {
           </div>
 
           <motion.div {...fadeUp(0.3)} className="text-center mt-10">
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.4)', marginBottom: '16px' }}>
+            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
               Don't tick every box? That's okay — exceptions exist and alternative routes may apply.
+              Contact us to discuss your specific situation.
             </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-white"
-              style={{ fontFamily: 'Poppins, sans-serif', background: 'linear-gradient(135deg, #0D9488, #14B8A6)', boxShadow: '0 8px 24px rgba(13,148,136,0.35)' }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 32px rgba(13,148,136,0.5)' }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 8px 24px rgba(13,148,136,0.35)' }}
-            >
-              Get a Free Eligibility Check
-              <ArrowRight size={16} />
-            </Link>
           </motion.div>
 
         </div>

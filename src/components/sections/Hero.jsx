@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Star, Users, Award, Globe, ChevronDown, Shield, Clock } from 'lucide-react'
+import { ArrowRight, Award, ChevronDown, Shield, Clock } from 'lucide-react'
 
 import slide1 from '../../assets/1.jpg'
 import slide2 from '../../assets/2.jpg'
@@ -18,7 +18,7 @@ const slides = [
     tag: 'PSW & Skilled Worker Visa',
     headline: 'Your Visa Journey',
     highlight: 'Starts Here',
-    sub: 'Expert immigration consultancy trusted by thousands. We make your dream of living, working, and studying abroad a reality.',
+    sub: 'Professional immigration consultancy helping you build a life abroad. We handle every step of your visa journey from start to finish.',
   },
   {
     id: 2,
@@ -45,7 +45,7 @@ const slides = [
     tag: 'Visitor & Work Visa',
     headline: 'The American',
     highlight: 'Dream Awaits',
-    sub: 'US visitor and work visa guidance from certified immigration consultants with a 98% success record.',
+    sub: 'US visitor and work visa guidance from certified immigration consultants. We prepare a complete, compelling application for you.',
   },
   {
     id: 5,
@@ -67,12 +67,6 @@ const slides = [
   },
 ]
 
-const stats = [
-  { value: '5,000+', label: 'Visas Approved', icon: Award },
-  { value: '98%', label: 'Success Rate', icon: Star },
-  { value: '15+', label: 'Countries', icon: Globe },
-  { value: '12+', label: 'Years Experience', icon: Users },
-]
 
 const trustBadges = [
   { icon: Shield, text: 'Trusted Consultancy' },

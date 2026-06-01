@@ -200,28 +200,6 @@ export default function ServicesSection() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="text-center mt-12"
-        >
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-white"
-            style={{
-              fontFamily: 'Poppins, sans-serif',
-              background: 'linear-gradient(135deg, #0D9488, #14B8A6)',
-              boxShadow: '0 8px 28px rgba(13,148,136,0.35)',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 36px rgba(13,148,136,0.5)' }}
-            onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 8px 28px rgba(13,148,136,0.35)' }}
-          >
-            Get a Free Consultation
-            <ArrowUpRight size={17} />
-          </Link>
-        </motion.div>
 
       </div>
     </section>

@@ -1,9 +1,8 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import {
   ShieldCheck, Clock, FileText, Headphones,
-  CheckCircle, TrendingUp, ArrowUpRight
+  CheckCircle, TrendingUp,
 } from 'lucide-react'
 
 const reasons = [
@@ -254,27 +253,6 @@ export default function WhyChooseUs() {
             ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={processInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.5 }}
-            className="text-center mt-12"
-          >
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-white"
-              style={{
-                fontFamily: 'Poppins, sans-serif',
-                background: 'linear-gradient(135deg, #0D9488, #14B8A6)',
-                boxShadow: '0 8px 28px rgba(13,148,136,0.35)',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 36px rgba(13,148,136,0.5)' }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 8px 28px rgba(13,148,136,0.35)' }}
-            >
-              Start Step 1 — Free Consultation
-              <ArrowUpRight size={17} />
-            </Link>
-          </motion.div>
 
         </div>
       </section>
