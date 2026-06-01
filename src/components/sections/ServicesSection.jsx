@@ -52,7 +52,7 @@ const services = [
     title: 'PR / Immigration',
     desc: 'Permanent residency and settlement pathways for the UK, Canada and beyond. We build your case from day one to ILR or Citizenship.',
     tags: ['ILR', 'Citizenship', 'Settlement'],
-    path: '/contact',
+    path: '/pr-immigration',
   },
   {
     icon: GraduationCap,

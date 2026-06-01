@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronDown, ArrowUpRight, GraduationCap, Briefcase, Globe, Users, MapPin } from 'lucide-react'
-import logo from '../../assets/logo.png'
+// Logo served from /public so it can be preloaded in index.html (no hash = stable URL)
+const logo = '/logo.png'
 
 const dropdownIcons = {
   'Study Visa': GraduationCap,
@@ -21,7 +22,7 @@ const navLinks = [
       { label: 'Work Visa', path: '/work-visa', desc: 'International job permits' },
       { label: 'Schengen Visa', path: '/schengen-visa', desc: 'Europe tourism & short stays' },
       { label: 'Visitor Visa', path: '/visitor-visa', desc: 'Tourism & family visits' },
-      { label: 'PR / Immigration', path: '/contact', desc: 'Permanent residency pathways' },
+      { label: 'PR / Immigration', path: '/pr-immigration', desc: 'Permanent residency pathways' },
     ]
   },
   { label: 'About', path: '/about' },

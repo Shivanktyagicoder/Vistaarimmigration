@@ -122,15 +122,23 @@ export default function Contact() {
   const onSubmit = async (data) => {
     setLoading(true)
     setSubmitError(null)
+
+    // Abort controller gives us a clean 15-second timeout.
+    // If Render is still waking up the user sees a clear message and WhatsApp fallback.
+    const controller = new AbortController()
+    const timeoutId  = setTimeout(() => controller.abort(), 15000)
+
     try {
       const res = await fetch(`${API_URL}/api/contact`, {
-        method: 'POST',
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal:  controller.signal,
         body: JSON.stringify({
           ...data,
           countryCode: phoneCode.replace('-US', ''),
         }),
       })
+      clearTimeout(timeoutId)
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}))
@@ -140,11 +148,15 @@ export default function Contact() {
       setSubmitted(true)
       reset()
     } catch (err) {
-      setSubmitError(
-        err.message === 'Failed to fetch'
-          ? 'Cannot reach server. Please try again or contact us on WhatsApp.'
-          : err.message
-      )
+      clearTimeout(timeoutId)
+
+      if (err.name === 'AbortError') {
+        setSubmitError('The server took too long to respond. Please try again in a moment, or reach us directly on WhatsApp.')
+      } else if (err.message === 'Failed to fetch') {
+        setSubmitError('Cannot reach server. Please try again or contact us on WhatsApp.')
+      } else {
+        setSubmitError(err.message)
+      }
     } finally {
       setLoading(false)
     }

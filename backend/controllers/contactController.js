@@ -1,5 +1,5 @@
 const Contact = require('../models/Contact')
-const { sendEnquiryNotification } = require('../utils/mailer')
+const { sendEnquiryNotification, sendConfirmationEmail } = require('../utils/mailer')
 
 // Whitelist of allowed values — blocks arbitrary data being written to the DB
 const ALLOWED_SERVICES = new Set([
@@ -77,9 +77,13 @@ const submitContact = async (req, res) => {
     })
     await contact.save()
 
-    // Notify the Vistaar team only — no email sent to the applicant
+    // 1. Notify the Vistaar team
     sendEnquiryNotification({ fullName, email, countryCode: cleanCode, phone, service, country, message, ipAddress })
-      .catch(err => console.error('[Mailer]', err.message))
+      .catch(err => console.error('[Mailer/Notify]', err.message))
+
+    // 2. Send a confirmation auto-reply to the applicant
+    sendConfirmationEmail({ fullName, email, service, country })
+      .catch(err => console.error('[Mailer/Confirm]', err.message))
 
     return res.status(201).json({
       success: true,

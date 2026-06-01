@@ -20,7 +20,8 @@ const LinkedInIcon = ({ size = 16, color = 'currentColor' }) => (
     <circle cx="4" cy="4" r="2" />
   </svg>
 )
-import logo from '../../assets/logo.png'
+// Logo served from /public so it can be preloaded in index.html (stable URL, no Vite hash)
+const logo = '/logo.png'
 
 const services = [
   { label: 'UK Skilled Worker Visa', path: '/work-visa' },
@@ -28,7 +29,7 @@ const services = [
   { label: 'Canada Study Visa', path: '/study-visa' },
   { label: 'Schengen Visa', path: '/schengen-visa' },
   { label: 'USA Visitor Visa', path: '/visitor-visa' },
-  { label: 'PR / Immigration', path: '/contact' },
+  { label: 'PR / Immigration', path: '/pr-immigration' },
   { label: 'Dependant Visa', path: '/contact' },
   { label: 'Visitor Visa', path: '/visitor-visa' },
 ]

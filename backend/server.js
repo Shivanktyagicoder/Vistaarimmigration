@@ -1,4 +1,5 @@
 require('dotenv').config({ path: require('path').resolve(__dirname, '.env') })
+const path          = require('path')
 const express       = require('express')
 const cors          = require('cors')
 const helmet        = require('helmet')
@@ -33,6 +34,11 @@ app.use(helmet({
   contentSecurityPolicy: false,
   crossOriginEmbedderPolicy: false,
 }))
+
+// ── Static files (logo, favicon) ──────────────────────────
+// Serves backend/public/ at the root so the email template can use:
+//   https://vistaarimmigration.onrender.com/logo.png
+app.use(express.static(path.join(__dirname, 'public')))
 
 // ── Body parser ───────────────────────────────────────────
 app.use(express.json({ limit: '16kb' }))
