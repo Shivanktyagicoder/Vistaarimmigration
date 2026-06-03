@@ -9,7 +9,8 @@
  * The Vistaar logo is loaded from the live website (stable Namecheap URL).
  */
 
-const nodemailer = require('nodemailer')
+const { Resend } = require('resend')
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 // ── Logo URL: served from frontend (Namecheap, always up) ────────────────────
 const LOGO_URL = 'https://vistaarimmigration.com/logo.png'
@@ -50,25 +51,6 @@ function brandHeader() {
   </tr>`
 }
 
-// ── SMTP transporter ──────────────────────────────────────────────────────────
-// Uses Gmail SMTP (smtp.gmail.com:587 with STARTTLS).
-// Render free tier blocks most third-party SMTP but allows Gmail reliably.
-// Requires a Gmail App Password — NOT your normal Gmail password:
-//   Gmail → Google Account → Security → 2-Step Verification → App Passwords
-const transporter = nodemailer.createTransport({
-  host:   'smtp.gmail.com',
-  port:   465,
-  secure: true,         // SSL on 465
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS,
-  },
-})
-
-transporter.verify((err) => {
-  if (err) console.warn('⚠️  Mailer verification failed:', err.message)
-  else     console.log('✅  Mailer transporter is ready')
-})
 
 // ── Helper: detail row in a table ────────────────────────────────────────────
 function row(label, value) {
@@ -221,11 +203,11 @@ async function sendEnquiryNotification(data) {
 </body>
 </html>`
 
-  await transporter.sendMail({
-    from:    `"Vistaar Immigration" <${process.env.GMAIL_USER}>`,
-    to:      process.env.NOTIFY_EMAIL,
-    replyTo: `"${esc(fullName)}" <${email}>`,
-    subject: `New Enquiry — ${esc(service)} | ${esc(fullName)}`,
+  await resend.emails.send({
+    from:     `Vistaar Immigration <info@vistaarimmigration.com>`,
+    to:       process.env.NOTIFY_EMAIL,
+    reply_to: email,
+    subject:  `New Enquiry — ${esc(service)} | ${esc(fullName)}`,
     html,
   })
 }
@@ -383,10 +365,9 @@ async function sendConfirmationEmail(data) {
 </body>
 </html>`
 
-  await transporter.sendMail({
-    from:    `"Vistaar Immigration" <${process.env.GMAIL_USER}>`,
+  await resend.emails.send({
+    from:    `Vistaar Immigration <info@vistaarimmigration.com>`,
     to:      email,
-    replyTo: `"Vistaar Immigration" <${process.env.GMAIL_USER}>`,
     subject: `Your Enquiry Received — Vistaar Immigration`,
     html,
   })
