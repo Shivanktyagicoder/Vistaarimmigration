@@ -8,6 +8,7 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import Layout from '../components/layout/Layout'
+import ProtectedRoute from '../components/admin/ProtectedRoute'
 
 // ── Lazy imports ─────────────────────────────────────────────────────────────
 const Home          = lazy(() => import('../pages/Home'))
@@ -26,6 +27,8 @@ const Privacy       = lazy(() => import('../pages/Privacy'))
 const Terms         = lazy(() => import('../pages/Terms'))
 const Cookies       = lazy(() => import('../pages/Cookies'))
 const NotFound      = lazy(() => import('../pages/NotFound'))
+const AdminLogin    = lazy(() => import('../pages/admin/AdminLogin'))
+const AdminCRM      = lazy(() => import('../pages/admin/AdminCRM'))
 
 // ── Minimal page-transition fallback ─────────────────────────────────────────
 // Shown while a lazy chunk is downloading (usually < 300 ms on good connection)
@@ -86,5 +89,25 @@ export const router = createBrowserRouter([
       { path: 'cookies',                      element: <Lazy element={Cookies} /> },
       { path: '*',                            element: <Lazy element={NotFound} /> },
     ],
+  },
+
+  // ── Admin: outside public Layout (no navbar/footer) ──────────────────────
+  {
+    path: '/admin/login',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <AdminLogin />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/admin/crm',
+    element: (
+      <ProtectedRoute>
+        <Suspense fallback={<PageLoader />}>
+          <AdminCRM />
+        </Suspense>
+      </ProtectedRoute>
+    ),
   },
 ])

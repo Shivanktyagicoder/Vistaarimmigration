@@ -6,6 +6,7 @@ const helmet        = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
 const mongoose      = require('mongoose')
 const contactRouter = require('./routes/contact')
+const adminRouter   = require('./routes/admin')
 
 const app  = express()
 const PORT = process.env.PORT || 5000
@@ -25,7 +26,7 @@ app.use(cors({
     if (allowedOrigins.includes(origin)) return callback(null, true)
     callback(new Error(`CORS blocked: ${origin}`))
   },
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PATCH'],
   credentials: true,
 }))
 
@@ -57,6 +58,7 @@ app.get('/health', (req, res) => {
 
 // ── Routes ────────────────────────────────────────────────
 app.use('/api/contact', contactRouter)
+app.use('/api/admin', adminRouter)
 
 // ── 404 ───────────────────────────────────────────────────
 app.use((_req, res) =>
