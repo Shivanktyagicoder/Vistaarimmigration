@@ -222,7 +222,7 @@ async function sendEnquiryNotification(data) {
 </html>`
 
   await transporter.sendMail({
-    from:    `"Vistaar Immigration" <${process.env.SMTP_USER}>`,
+    from:    `"Vistaar Immigration" <${process.env.GMAIL_USER}>`,
     to:      process.env.NOTIFY_EMAIL,
     replyTo: `"${esc(fullName)}" <${email}>`,
     subject: `New Enquiry — ${esc(service)} | ${esc(fullName)}`,
@@ -384,9 +384,9 @@ async function sendConfirmationEmail(data) {
 </html>`
 
   await transporter.sendMail({
-    from:    `"Vistaar Immigration" <${process.env.SMTP_USER}>`,
+    from:    `"Vistaar Immigration" <${process.env.GMAIL_USER}>`,
     to:      email,
-    replyTo: `"Vistaar Immigration" <${process.env.SMTP_USER}>`,
+    replyTo: `"Vistaar Immigration" <${process.env.GMAIL_USER}>`,
     subject: `Your Enquiry Received — Vistaar Immigration`,
     html,
   })
