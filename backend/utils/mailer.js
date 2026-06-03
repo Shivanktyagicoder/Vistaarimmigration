@@ -57,11 +57,11 @@ function brandHeader() {
 //   Gmail → Google Account → Security → 2-Step Verification → App Passwords
 const transporter = nodemailer.createTransport({
   host:   'smtp.gmail.com',
-  port:   587,
-  secure: false,        // STARTTLS on 587
+  port:   465,
+  secure: true,         // SSL on 465
   auth: {
-    user: process.env.GMAIL_USER,   // your Gmail address e.g. yourname@gmail.com
-    pass: process.env.GMAIL_PASS,   // 16-char App Password (no spaces)
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
   },
 })
 
