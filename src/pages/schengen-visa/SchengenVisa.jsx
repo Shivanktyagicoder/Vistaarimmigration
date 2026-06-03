@@ -9,21 +9,26 @@ import {
 } from 'lucide-react'
 import { schengenData, schengenCountries } from '../../data/schengen-visa'
 
-function Section({ title, icon, children }) {
+function Section({ title, icon, label, children }) {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-            <div className="flex items-center gap-3 mb-5"
-                style={{ borderLeft: '3px solid #0D9488', paddingLeft: '12px' }}>
-                <span className="text-lg">{icon}</span>
-                <h2 className="font-bold text-lg"
-                    style={{ fontFamily: 'Poppins, sans-serif', color: '#0F172A' }}>
+            <div className="mb-6">
+                <div className="flex items-center gap-2 mb-2">
+                    <span className="text-base">{icon}</span>
+                    <span className="text-xs font-bold uppercase tracking-widest"
+                        style={{ color: '#0D9488', fontFamily: 'Inter, sans-serif', letterSpacing: '0.12em' }}>
+                        {label || title}
+                    </span>
+                </div>
+                <h2 style={{ fontFamily: 'Poppins, sans-serif', fontSize: 'clamp(1.25rem, 2.5vw, 1.55rem)', fontWeight: 800, color: '#0F172A', letterSpacing: '-0.025em', lineHeight: 1.2 }}>
                     {title}
                 </h2>
+                <div style={{ height: '3px', width: '44px', background: 'linear-gradient(90deg, #0D9488, #38BDF8)', borderRadius: '99px', marginTop: '10px' }} />
             </div>
             {children}
         </motion.div>
@@ -99,6 +104,25 @@ function VisaDetail({ visa }) {
                         ))}
                     </div>
                 </Section>
+
+                {/* Checklist download */}
+                <motion.a
+                    href="/checklists/schengen-visa-checklist.pdf"
+                    download
+                    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                    className="flex items-center gap-3 p-4 rounded-xl mb-2"
+                    style={{ background: '#F0FDFA', border: '1.5px solid #0D9488', textDecoration: 'none' }}
+                >
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{ background: 'linear-gradient(135deg, #0D9488, #14B8A6)', boxShadow: '0 4px 12px rgba(13,148,136,0.3)' }}>
+                        <FileText size={16} color="white" />
+                    </div>
+                    <div className="flex-1">
+                        <p className="font-bold text-sm" style={{ fontFamily: 'Poppins, sans-serif', color: '#0D9488' }}>Download Schengen Visa Checklist</p>
+                        <p className="text-xs" style={{ fontFamily: 'Inter, sans-serif', color: '#64748B' }}>Complete document checklist — PDF, free download</p>
+                    </div>
+                    <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: '#0D9488', color: 'white', fontFamily: 'Inter, sans-serif' }}>PDF</span>
+                </motion.a>
 
                 {/* Requirements */}
                 <Section title="Required Documents" icon="📋">

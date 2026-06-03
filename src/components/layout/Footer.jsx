@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
-  MapPin, Phone, Mail, Globe,
+  MapPin, Phone, Mail,
   MessageCircle, Clock, Shield, Award, ChevronRight
 } from 'lucide-react'
 
@@ -36,7 +36,7 @@ const services = [
 
 const quickLinks = [
   { label: 'Home', path: '/' },
-  { label: 'About Us', path: '/contact' },
+  { label: 'About Us', path: '/about' },
   { label: 'Our Services', path: '/study-visa' },
   { label: 'Book Appointment', path: '/contact' },
   { label: 'Blog', path: '/blog' },
@@ -70,15 +70,6 @@ const socials = [
     bg: 'rgba(10,102,194,0.1)',
     bgHover: 'rgba(10,102,194,0.25)',
     border: 'rgba(10,102,194,0.25)',
-  },
-  {
-    label: 'Website',
-    icon: Globe,
-    href: 'https://vistaarimmigration.com',
-    color: '#14B8A6',
-    bg: 'rgba(20,184,166,0.1)',
-    bgHover: 'rgba(20,184,166,0.25)',
-    border: 'rgba(20,184,166,0.25)',
   },
 ]
 

@@ -331,14 +331,15 @@ export default function Contact() {
         </div>
 
         {/* ── MAIN CONTENT ─────────────────────────────────────────────────── */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12" style={{ paddingTop: '48px', paddingBottom: '80px' }}>
-          <div className="grid lg:grid-cols-[340px_1fr] gap-8 items-start">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8" style={{ paddingTop: '48px', paddingBottom: '80px' }}>
+          <div>
 
-            {/* ── LEFT: Info panel ────────────────────────────────────────── */}
+            {/* ── LEFT: Info panel — hidden, contact info moved below form ── */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              style={{ display: 'none' }}
             >
               {/* Why choose us */}
               <div
@@ -880,6 +881,39 @@ export default function Contact() {
                   </motion.form>
                 )}
               </AnimatePresence>
+            </motion.div>
+
+            {/* ── CONTACT STRIP below form ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', gap: '12px' }}
+            >
+              <a href="tel:+447344896264"
+                style={{ flex: 1, minWidth: '200px', display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 18px', borderRadius: '12px', background: 'white', border: '1px solid #E5E7EB', textDecoration: 'none', boxShadow: '0 1px 6px rgba(0,0,0,0.04)' }}>
+                <Phone size={16} color="#0D9488" />
+                <div>
+                  <p style={{ fontFamily: 'Poppins, sans-serif', fontSize: '12px', fontWeight: 700, color: '#0F172A', marginBottom: '1px' }}>Call Us</p>
+                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: '#0D9488', fontWeight: 600 }}>+44 7344 896 264</p>
+                </div>
+              </a>
+              <a href="mailto:info@vistaarimmigration.com"
+                style={{ flex: 1, minWidth: '200px', display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 18px', borderRadius: '12px', background: 'white', border: '1px solid #E5E7EB', textDecoration: 'none', boxShadow: '0 1px 6px rgba(0,0,0,0.04)' }}>
+                <Mail size={16} color="#0D9488" />
+                <div>
+                  <p style={{ fontFamily: 'Poppins, sans-serif', fontSize: '12px', fontWeight: 700, color: '#0F172A', marginBottom: '1px' }}>Email</p>
+                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: '#0D9488', fontWeight: 600 }}>info@vistaarimmigration.com</p>
+                </div>
+              </a>
+              <a href="https://wa.me/447344896264" target="_blank" rel="noopener noreferrer"
+                style={{ flex: 1, minWidth: '200px', display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 18px', borderRadius: '12px', background: '#F0FDF4', border: '1.5px solid #86EFAC', textDecoration: 'none', boxShadow: '0 1px 6px rgba(0,0,0,0.04)' }}>
+                <MessageCircle size={16} color="#16A34A" />
+                <div>
+                  <p style={{ fontFamily: 'Poppins, sans-serif', fontSize: '12px', fontWeight: 700, color: '#15803D', marginBottom: '1px' }}>WhatsApp</p>
+                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: '#16A34A', fontWeight: 600 }}>Instant Reply</p>
+                </div>
+              </a>
             </motion.div>
 
           </div>

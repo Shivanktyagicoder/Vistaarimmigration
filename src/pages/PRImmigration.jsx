@@ -543,6 +543,28 @@ export default function PRImmigration() {
         </div>
       </section>
 
+      {/* ══ Canada PR Checklist download ═══════════════════════════════════════ */}
+      <section style={{ background: '#F8FAFC' }} className="py-8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <a
+            href="/checklists/canada-pr-checklist.pdf"
+            download
+            className="flex items-center gap-4 p-5 rounded-2xl max-w-xl"
+            style={{ background: '#F0FDFA', border: '1.5px solid #0D9488', textDecoration: 'none', boxShadow: '0 4px 16px rgba(13,148,136,0.1)' }}
+          >
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: 'linear-gradient(135deg, #0D9488, #14B8A6)', boxShadow: '0 4px 14px rgba(13,148,136,0.35)' }}>
+              <span style={{ color: 'white', fontSize: '18px' }}>📋</span>
+            </div>
+            <div className="flex-1">
+              <p className="font-bold" style={{ fontFamily: 'Poppins, sans-serif', color: '#0D9488', fontSize: '0.95rem' }}>Download Canada PR Eligibility Checklist</p>
+              <p className="text-sm" style={{ fontFamily: 'Inter, sans-serif', color: '#64748B' }}>Free PDF checklist — Express Entry, PNP & more</p>
+            </div>
+            <span className="text-xs font-semibold px-3 py-1.5 rounded-full flex-shrink-0" style={{ background: '#0D9488', color: 'white', fontFamily: 'Inter, sans-serif' }}>Download</span>
+          </a>
+        </div>
+      </section>
+
       {/* ══ 6. WHY VISTAAR ════════════════════════════════════════════════════ */}
       <section
         style={{ background: 'linear-gradient(135deg, #060E1A 0%, #0A1628 100%)' }}

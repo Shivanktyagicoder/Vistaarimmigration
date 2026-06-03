@@ -126,9 +126,9 @@ export default function Hero() {
     }, 6000)
   }
 
-  // Preload all slide images immediately so carousel transitions are instant
+  // Preload only the first 2 slides immediately; the rest load on demand
   useEffect(() => {
-    slides.forEach(slide => {
+    slides.slice(0, 2).forEach(slide => {
       const img = new Image()
       img.src = slide.image
     })

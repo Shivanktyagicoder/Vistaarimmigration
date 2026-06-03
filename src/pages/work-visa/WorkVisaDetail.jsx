@@ -186,6 +186,27 @@ export default function WorkVisaDetail() {
                                 </div>
                             </Section>
 
+                            {/* Checklist download — shown only for UK Skilled Worker */}
+                            {visa.id === 'uk-skilled-worker' && (
+                                <motion.a
+                                    href="/checklists/uk-skilled-worker-checklist.pdf"
+                                    download
+                                    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                                    className="flex items-center gap-3 p-4 rounded-xl mb-2"
+                                    style={{ background: '#F0FDFA', border: '1.5px solid #0D9488', textDecoration: 'none' }}
+                                >
+                                    <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                                        style={{ background: 'linear-gradient(135deg, #0D9488, #14B8A6)', boxShadow: '0 4px 12px rgba(13,148,136,0.3)' }}>
+                                        <BookOpen size={16} color="white" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="font-bold text-sm" style={{ fontFamily: 'Poppins, sans-serif', color: '#0D9488' }}>Download UK Skilled Worker Checklist</p>
+                                        <p className="text-xs" style={{ fontFamily: 'Inter, sans-serif', color: '#64748B' }}>Complete document checklist — free PDF download</p>
+                                    </div>
+                                    <span className="text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0" style={{ background: '#0D9488', color: 'white', fontFamily: 'Inter, sans-serif' }}>PDF</span>
+                                </motion.a>
+                            )}
+
                             {/* Requirements */}
                             <Section title="Requirements & Documents" icon="📋">
                                 <div className="flex flex-col gap-3">
