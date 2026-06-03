@@ -26,7 +26,7 @@ const BANNERS = {
   usa:       'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=800&q=70',
   australia: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=800&q=70',
   schengen:  'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=800&q=70',
-  'study-visa': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=70',
+  'study-visa': 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=70',
   tips:      'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=70',
   'work-visa': 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=800&q=70',
 }
@@ -208,6 +208,7 @@ function GuideCard({ post, index }) {
           <img src={img} alt={post.title} className="w-full h-full object-cover" style={{ transition: 'transform 0.4s ease' }}
             onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
             onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+            onError={e => { e.currentTarget.src = BANNERS.all }}
             loading="lazy" />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(15,23,42,0.6) 0%, transparent 55%)' }} />
           <span className="absolute bottom-3 left-3 text-xs px-2.5 py-1 rounded-full font-medium"
