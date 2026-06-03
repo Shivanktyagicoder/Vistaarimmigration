@@ -1,8 +1,8 @@
-import harvard  from '../../assets/usa/harvard.jpg'
-import mit       from '../../assets/usa/mit.jpg'
-import stanford  from '../../assets/usa/stranford.jpg'
-import princeton from '../../assets/usa/prinston.jpg'
-import chicago   from '../../assets/usa/chicago.jpg'
+import harvard  from '../../assets/USA/harvard.jpg'
+import mit       from '../../assets/USA/mit.jpg'
+import stanford  from '../../assets/USA/stranford.jpg'
+import princeton from '../../assets/USA/prinston.jpg'
+import chicago   from '../../assets/USA/chicago.jpg'
 
 export const usa = {
   id: 'usa',

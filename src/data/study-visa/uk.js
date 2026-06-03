@@ -1,7 +1,7 @@
-import oxford    from '../../assets/uk/university of oxford.jpg'
-import cambridge  from '../../assets/uk/university of cambridge.jpg'
-import imperial   from '../../assets/uk/imperial.jpg'
-import manchester from '../../assets/uk/university of manchester.jpg'
+import oxford    from '../../assets/Uk/university of oxford.jpg'
+import cambridge  from '../../assets/Uk/university of cambridge.jpg'
+import imperial   from '../../assets/Uk/imperial.jpg'
+import manchester from '../../assets/Uk/university of manchester.jpg'
 
 export const uk = {
     id: 'uk',

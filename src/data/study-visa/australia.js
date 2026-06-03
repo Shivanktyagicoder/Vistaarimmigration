@@ -1,6 +1,6 @@
-import melbourne  from '../../assets/australia/university of melbourne.jpg'
-import sydney      from '../../assets/australia/sydney university (2).jpg'
-import victoria    from '../../assets/australia/victoria university.jpg'
+import melbourne  from '../../assets/Australia/university of melbourne.jpg'
+import sydney      from '../../assets/Australia/sydney university (2).jpg'
+import victoria    from '../../assets/Australia/victoria university.jpg'
 
 export const australia = {
     id: 'australia',
