@@ -8,12 +8,39 @@ import {
 } from 'lucide-react'
 import { workVisaData } from '../../data/work-visa'
 
-function Section({ title, icon, children }) {
+function Section({ title, icon, label, children }) {
     return (
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-            <div className="flex items-center gap-3 mb-5" style={{ borderLeft: '3px solid #0D9488', paddingLeft: '12px' }}>
-                <span className="text-lg">{icon}</span>
-                <h2 className="font-bold text-lg" style={{ fontFamily: 'Poppins, sans-serif', color: '#0F172A' }}>{title}</h2>
+        <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+            <div className="mb-6">
+                <div className="flex items-center gap-2 mb-2">
+                    <span className="text-base">{icon}</span>
+                    <span className="text-xs font-bold uppercase tracking-widest"
+                        style={{ color: '#0D9488', fontFamily: 'Inter, sans-serif', letterSpacing: '0.12em' }}>
+                        {label || title}
+                    </span>
+                </div>
+                <h2 style={{
+                    fontFamily: 'Poppins, sans-serif',
+                    fontSize: 'clamp(1.25rem, 2.5vw, 1.55rem)',
+                    fontWeight: 800,
+                    color: '#0F172A',
+                    letterSpacing: '-0.025em',
+                    lineHeight: 1.2,
+                }}>
+                    {title}
+                </h2>
+                <div style={{
+                    height: '3px',
+                    width: '44px',
+                    background: 'linear-gradient(90deg, #0D9488, #38BDF8)',
+                    borderRadius: '99px',
+                    marginTop: '10px',
+                }} />
             </div>
             {children}
         </motion.div>
@@ -23,11 +50,13 @@ function Section({ title, icon, children }) {
 function SideCard({ title, icon, children }) {
     return (
         <div className="p-5 rounded-2xl bg-white" style={{ border: '1px solid #E2E8F0', boxShadow: '0 2px 12px rgba(15,23,42,0.05)' }}>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-1 pb-3" style={{ borderBottom: '1px solid #F1F5F9' }}>
                 {icon}
-                <h3 className="font-semibold text-sm" style={{ fontFamily: 'Poppins, sans-serif', color: '#0F172A' }}>{title}</h3>
+                <h3 className="font-bold text-sm" style={{ fontFamily: 'Poppins, sans-serif', color: '#0F172A', letterSpacing: '-0.01em' }}>{title}</h3>
             </div>
-            {children}
+            <div className="mt-3">
+                {children}
+            </div>
         </div>
     )
 }
@@ -247,23 +276,39 @@ export default function WorkVisaDetail() {
                             )}
 
                             {/* Steps */}
-                            <Section title="Step-by-Step Process" icon="🗺️">
+                            <Section title="Step-by-Step Process" icon="🗺️" label="How It Works">
                                 <div className="relative">
-                                    <div className="absolute left-5 top-5 bottom-5 w-px"
-                                        style={{ background: 'linear-gradient(to bottom, #0D9488, #E2E8F0)' }} />
-                                    <div className="flex flex-col gap-4">
+                                    <motion.div
+                                        className="absolute z-0"
+                                        style={{ left: '19px', top: '40px', width: '2px', background: 'linear-gradient(to bottom, #0D9488, #38BDF8, transparent)', transformOrigin: 'top', borderRadius: '2px' }}
+                                        initial={{ scaleY: 0 }}
+                                        whileInView={{ scaleY: 1 }}
+                                        viewport={{ once: true, margin: '-40px' }}
+                                        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                                    />
+                                    <div className="flex flex-col gap-5">
                                         {visa.steps.map((s, i) => (
                                             <motion.div key={i}
-                                                initial={{ opacity: 0, x: -15 }} whileInView={{ opacity: 1, x: 0 }}
-                                                viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                                                className="flex items-start gap-5 pl-1">
-                                                <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm z-10 text-white"
-                                                    style={{ background: 'linear-gradient(135deg, #0D9488, #14B8A6)', boxShadow: '0 4px 16px rgba(13,148,136,0.25)', fontFamily: 'Poppins, sans-serif' }}>
+                                                initial={{ opacity: 0, x: -20 }}
+                                                whileInView={{ opacity: 1, x: 0 }}
+                                                viewport={{ once: true, margin: '-40px' }}
+                                                transition={{ delay: 0.15 + i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                                className="flex items-start gap-5"
+                                            >
+                                                <motion.div
+                                                    initial={{ scale: 0 }}
+                                                    whileInView={{ scale: 1 }}
+                                                    viewport={{ once: true }}
+                                                    transition={{ delay: 0.1 + i * 0.1, type: 'spring', stiffness: 220, damping: 14 }}
+                                                    className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm z-10 text-white"
+                                                    style={{ background: 'linear-gradient(135deg, #0D9488, #14B8A6)', boxShadow: '0 4px 20px rgba(13,148,136,0.35)', fontFamily: 'Poppins, sans-serif' }}
+                                                >
                                                     {s.step}
-                                                </div>
-                                                <div className="pt-2 pb-2">
-                                                    <p className="font-semibold text-sm" style={{ fontFamily: 'Poppins, sans-serif', color: '#0F172A' }}>{s.title}</p>
-                                                    <p className="text-xs mt-0.5" style={{ color: '#64748B', fontFamily: 'Inter, sans-serif' }}>{s.desc}</p>
+                                                </motion.div>
+                                                <div className="flex-1 bg-white rounded-xl p-4"
+                                                    style={{ border: '1px solid #E2E8F0', boxShadow: '0 2px 8px rgba(15,23,42,0.04)' }}>
+                                                    <p className="font-bold" style={{ fontFamily: 'Poppins, sans-serif', color: '#0F172A', fontSize: '0.95rem', letterSpacing: '-0.01em' }}>{s.title}</p>
+                                                    <p className="text-sm mt-1.5 leading-relaxed" style={{ color: '#64748B', fontFamily: 'Inter, sans-serif' }}>{s.desc}</p>
                                                 </div>
                                             </motion.div>
                                         ))}

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
     Clock, TrendingUp, Globe, Users, Shield,
     CheckCircle, X, ChevronDown, ChevronUp,
-    DollarSign, FileText, AlertCircle, Ban
+    AlertCircle, Ban
 } from 'lucide-react'
 import { visitorVisaCountries } from '../../data/visitor-visa'
 
@@ -59,8 +59,8 @@ export default function VisitorVisa() {
                         </p>
                         <div className="flex flex-wrap gap-3 mt-6">
                             {[
-                                { icon: Shield, label: 'High Approval Rate' },
-                                { icon: Users, label: '5,000+ Visas Approved' },
+                                { icon: Shield, label: 'OISC Regulated' },
+                                { icon: Users, label: 'Expert Advisors' },
                                 { icon: Clock, label: 'Fast Processing' },
                             ].map((s, i) => (
                                 <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full"
