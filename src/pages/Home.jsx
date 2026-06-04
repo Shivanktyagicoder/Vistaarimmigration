@@ -9,10 +9,10 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Vistaar Immigration — UK, Canada, USA, Australia Visa Consultants</title>
-        <meta name="description" content="Vistaar Immigration — OISC-regulated visa consultants in London. Student, Work, Visitor and PR visas for UK, Canada, USA, Australia and Schengen. Book a free consultation." />
-        <meta property="og:title" content="Vistaar Immigration — Professional Visa &amp; Immigration Consultants" />
-        <meta property="og:description" content="OISC-regulated immigration consultancy for UK, Canada, USA, Australia and Schengen. Student, Work, Visitor and PR visas handled professionally from start to finish." />
+        <title>Vistaar Immigration | UK Visa &amp; Immigration Consultants</title>
+        <meta name="description" content="OISC-regulated immigration consultants in London. Expert guidance for Student, Work, Visitor, Schengen &amp; PR visas to UK, Canada, USA, Australia and more. Book a free consultation." />
+        <meta property="og:title" content="Vistaar Immigration | UK Visa &amp; Immigration Consultants" />
+        <meta property="og:description" content="OISC-regulated immigration consultants in London. Expert Student, Work, Visitor, Schengen and PR visa guidance for UK, Canada, USA, Australia and more." />
         <meta property="og:url" content="https://vistaarimmigration.com" />
         <link rel="canonical" href="https://vistaarimmigration.com" />
       </Helmet>
